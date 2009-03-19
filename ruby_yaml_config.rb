@@ -11,17 +11,12 @@ end
 
 #Function to Load Settings
 def loadConfig(configFile)
-   if File.exist?(configFile)
-      config = open(configFile) {|f| YAML.load(f) }
-   else
-      config = {}
-   end
+   config = {}
    #do this to set parameters that might be missing from the yaml file
-   if config[:raw_conf_folder_loc].nil?  
-      config[:raw_conf_folder_loc] = "1"
-   end
-   if config[:drv_conf_folder_loc].nil?  
-      config[:drv_conf_folder_loc] = "2"
+   config[:raw_conf_folder_loc] = "1"
+   config[:drv_conf_folder_loc] = "2"
+   if File.exist?(configFile)
+      config.update(open(configFile) {|f| YAML.load(f) })
    end
    return config
 end
