@@ -7,11 +7,6 @@ watchdir2  = "/Users/name/torrents/watchx/"
 downloaddir  = "/Users/name/04-Downloads/"
 completedir  = "/Users/name/05-Complete/"
 
-#m = MetaInfo.new
-#setup = "aversa-0.3/Demons.S01E05.WS.PDTV.XviD-RiVER.torrent"
-#m.decode(setup)
-#m.print
-
 
 activeFiles    = Array.new
 completedFiles = Array.new
@@ -21,7 +16,7 @@ i=0
 
 #Search Download Dir for 
 Dir.foreach(watchdir1) do |x| 
-   if x.match(/^[a-zA-Z0-9]?[a-zA-Z0-9_.-]*(torrent)$/)
+   if x.match(/^[a-zA-Z0-9]+[a-zA-Z0-9_.-]*(torrent)$/)
       meta = MetaInfo.new
       meta.decode(watchdir1 + x)
       filename = meta.name
@@ -30,7 +25,7 @@ Dir.foreach(watchdir1) do |x|
    end
 end
 Dir.foreach(watchdir2) do |x| 
-   if x.match(/^[a-zA-Z0-9]?[a-zA-Z0-9_.-]*(torrent)$/)
+   if x.match(/^[a-zA-Z0-9]+[a-zA-Z0-9_.-]*(torrent)$/)
       meta = MetaInfo.new
       meta.decode(watchdir2 + x)
       filename = meta.name
