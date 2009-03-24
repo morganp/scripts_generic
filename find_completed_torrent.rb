@@ -16,7 +16,7 @@ i=0
 
 #Search Download Dir for 
 Dir.foreach(watchdir1) do |x| 
-   if x.match(/^[a-zA-Z0-9]+[a-zA-Z0-9_.-]*(torrent)$/)
+   if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
       meta = MetaInfo.new
       meta.decode(watchdir1 + x)
       filename = meta.name
@@ -25,7 +25,7 @@ Dir.foreach(watchdir1) do |x|
    end
 end
 Dir.foreach(watchdir2) do |x| 
-   if x.match(/^[a-zA-Z0-9]+[a-zA-Z0-9_.-]*(torrent)$/)
+   if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
       meta = MetaInfo.new
       meta.decode(watchdir2 + x)
       filename = meta.name
