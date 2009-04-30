@@ -6,11 +6,15 @@ configFile = "config.yml"
 
 #Function to save
 def saveConfig(configFile, config)
-  open(configFile, 'w') {|f| YAML.dump(config, f)}
+   #For Shoes compatability change to a known directory
+   Dir.chdir(ENV['HOME'])
+   open(configFile, 'w') {|f| YAML.dump(config, f)}
 end
 
 #Function to Load Settings
 def loadConfig(configFile)
+   #For Shoes compatability change to a known directory
+   Dir.chdir(ENV['HOME'])
    config = {}
    #do this to set parameters that might be missing from the yaml file
    config[:raw_conf_folder_loc] = "1"
