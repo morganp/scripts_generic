@@ -14,12 +14,7 @@ $link       = "http://www.yourweb.com/";
 $subtitle   = "MP4 Podcasting";
 $summary    = "MP4 feed";
 $language   = "en";
-$copyright  = "you";
-$owner_name = "you";
-$owner_email= "you@email.com";
-$image      = "http://www.slava.pri.ee/podcast/doppler.jpg";
 $category   = "MP4";
-$subcategory= "";
 $type       = "video/mp4";
 $extension  = ".mp4";
 
