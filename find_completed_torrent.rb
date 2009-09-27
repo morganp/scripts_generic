@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby 
 
-require 'aversa-0.3/aversa'
+require './aversa-0.3/aversa'
 
 watchdir1  = "/Users/name/torrents/watch/"
 watchdir2  = "/Users/name/torrents/watchx/"
@@ -8,6 +8,7 @@ downloaddir  = "/Users/name/04-Downloads/"
 completedir  = "/Users/name/05-Complete/"
 
 
+watchdir   = [watchdir1, watchdir2]
 activeFiles    = Array.new
 completedFiles = Array.new
 
@@ -15,24 +16,19 @@ completedFiles = Array.new
 i=0
 
 #Search Download Dir for 
-Dir.foreach(watchdir1) do |x| 
-   if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
-      meta = MetaInfo.new
-      meta.decode(watchdir1 + x)
-      filename = meta.name
-      activeFiles[i] = filename
-      i=i+1
+(watchdir).each do |watch|
+   puts watch
+   Dir.foreach(watch) do |x|
+      if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
+         meta = MetaInfo.new
+         meta.decode(watch + x)
+         filename = meta.name
+         activeFiles[i] = filename
+         i=i+1
+      end
    end
 end
-Dir.foreach(watchdir2) do |x| 
-   if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
-      meta = MetaInfo.new
-      meta.decode(watchdir2 + x)
-      filename = meta.name
-      activeFiles[i] = filename
-      i=i+1
-   end
-end
+
 puts "Active Files #{i}"
 
 j = 0
