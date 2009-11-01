@@ -1,0 +1,55 @@
+##Samaba smb.conf Example
+## Requires users to have user name and password
+## With a few additional security features
+
+[global]
+    workgroup = WORKGROUPNAME
+    netbios aliases = SERVERNAME, servername, Servername
+    server string = 
+    interfaces = eth0, eth1
+    bind interfaces only = Yes
+    invalid users = root
+    security = user
+    map to guest = Bad Password
+    guest ok = yes
+    encrypt passwords = true
+    public = yes
+    security = user 
+    wins support = yes
+    local master = yes
+    domain master = yes
+    preferred master = yes
+    os level = 65
+    valid users = userone, usertwo
+
+
+[homes]
+   comment = Home Directories
+   browsable = no
+   ## Only allow users to connect to there own area
+   valid users = %S
+   writable = yes
+   create mask = 0700
+   directory mask = 0700
+    
+[timemachinetest]
+   path = /mnt/servername/terra1/timemachinetest
+   browsable = yes
+   read only = No 
+   guest ok = No
+   write list = userone
+
+[WebDev]
+   path = /mnt/servername/terra1/www
+   browsable = yes
+   read only = No
+   guest ok = No
+   write list = userone
+
+[servername_Public]
+   path = /mnt/starbug1/terra1/samba
+   browsable = yes
+   read only = No
+   guest ok = No
+   write list = userone, usertwo
+   hosts allow = 192.168.
