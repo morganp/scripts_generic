@@ -19,12 +19,17 @@ i=0
 (watchdir).each do |watch|
    puts watch
    Dir.foreach(watch) do |x|
-      if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
-         meta = MetaInfo.new
-         meta.decode(watch + x)
-         filename = meta.name
-         activeFiles[i] = filename
-         i=i+1
+      begin
+         if x.match(/^[a-zA-Z0-9\[\]]+[-a-zA-Z0-9_.\[\] ]*(torrent)$/)
+            meta = MetaInfo.new
+            meta.decode(watch + x)
+            filename = meta.name
+            activeFiles[i] = filename
+            i=i+1
+         end
+      rescue
+         puts ""
+         puts "ERROR with : " + watch + x
       end
    end
 end
