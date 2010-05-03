@@ -64,3 +64,4 @@ end
 
 a = Memory.new
 a.report
+puts a.total
