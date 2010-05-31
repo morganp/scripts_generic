@@ -23,7 +23,7 @@
        
 
       opts = OptionParser.new do |opts|
-        opts.banner = "Usage: example.rb [options]"
+        opts.banner = "Usage: #{__FILE__} [options]"
         opts.separator ""
         opts.separator "Specific options:"
 
