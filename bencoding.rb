@@ -11,7 +11,7 @@ class Bencoding
       # TODO figure out how this can not be global
             
       # Prefom a little input verification, vaildate the input file
-      @msg = "#{$0} \n\tSent #{ARGV[0]}  \n\t"
+      @msg = "#{$0} \n\tCalled #{__FILE__}\n\tSent #{file}  \n\t"
       if not File.file? file
          if File.directory? file
             puts @msg + "Input Requires Torrent File Not a Directoy"
@@ -27,7 +27,7 @@ class Bencoding
 
       if metainfo.class.to_s != "Hash"
          puts @msg + "Invalid Torrent File"
-         exit 1
+         exit 1  if __FILE__ == $0
       end
    end
 

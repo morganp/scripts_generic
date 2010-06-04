@@ -9,7 +9,7 @@ path = File.dirname(path)
 require "#{path}/bencoding"
 
 # handle arguments
-if ARGV.length == 2
+if not ARGV.length == 1
   puts "Usage: #{__FILE__} <torrent_file>"
   exit 1
 end
@@ -22,3 +22,10 @@ metainfo = torrent.metainfo
 puts torrent
 
 
+require 'rubygems'
+require 'rubytorrent'
+#gem install rubytorrent
+
+rtorrent = RubyTorrent::MetaInfo.from_location(torrentFile)
+
+pp rtorrent.inspect
