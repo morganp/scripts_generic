@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby 
 
+require 'FileUtils'
+
 path = File.expand_path $0
 path = File.dirname(path)
 
@@ -26,6 +28,10 @@ def check_envs (envs_to_check)
    end
 
    if failure 
+      puts "Checking for torrents in : ENV['TORRENT_FILES']" 
+      puts "Downloaded content from ENV['TEMP_FILES'] which does not have an active torrent"
+      puts "   will be moved to ENV['MEDIA_FILES']" 
+      puts 
       exit 1
    end
 end
@@ -35,6 +41,12 @@ check_envs(['MEDIA_FILES', 'TEMP_FILES', 'TORRENT_FILES'])
 # use eval to turn string into array of strings (because of the format of saved string)
 downloaddir  = eval(ENV['TEMP_FILES'])[0]
 completedir  = eval(ENV['MEDIA_FILES'])[0]
+
+puts "Checking for torrents in :" 
+pp ENV['TORRENT_FILES']
+puts "Downloaded content from #{downloaddir} which does not have an active torrent"
+puts "   will be moved to #{completedir}" 
+puts 
 
 activeFiles    = Array.new
 completedFiles = Array.new
@@ -52,6 +64,13 @@ eval(ENV['TORRENT_FILES']).each do |watch|
             startTime = Time.now
             puts watch + x
 
+            ## TODO Try these parsers in order and fall back appropriately 
+            #  Output message to let user know there is a faster parser available
+
+            # gem install rubytorrent
+            #There seems to be no good way to get a working copy of ruby torrent
+            # will have to release it as a new rubygem
+            activeFiles[i] = RubyTorrent::MetaInfo.from_location(watch + x).info.name
 
             # Aversa 6 times faster than Bencoding
             #meta = MetaInfo.new
@@ -62,12 +81,6 @@ eval(ENV['TORRENT_FILES']).each do |watch|
             # Ugh This seems to be very slow and uses massive CPU
             #metainfo = Bencoding.new(watch + x).metainfo
             #activeFiles[i] = metainfo['info']['name']
-
-            # gem install rubytorrent
-            #There seems to be no good way to get a working copy of ruby torrent
-            # will have to release it as a new rubygem
-            activeFiles[i] = RubyTorrent::MetaInfo.from_location(watch + x).info.name
-
 
             execTime = Time.now - startTime
             puts "Execution time #{execTime} seconds."
@@ -101,7 +114,8 @@ Dir.foreach(downloaddir) do |d|
       end
       if (active == false) 
          completedFiles[k] = d
-         puts " mv \"#{downloaddir + completedFiles[k]}\" #{completedir}"
+         puts "mv \"#{downloaddir + completedFiles[k]}\" #{completedir}"
+         FileUtils::mv("#{downloaddir + completedFiles[k]}", completedir.to_s)
          j=j+1
       end
    end
