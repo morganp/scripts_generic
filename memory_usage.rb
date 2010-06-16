@@ -43,7 +43,7 @@ class Memory
    def report
       @usage.each do |x|
          #rjust string.rjust(min length)
-         puts x[:pid].rjust (@max[:pid] ) + (" %.2f MB " % x[:rss]).rjust( @max[:rss]+3 ) + x[:command]
+         puts x[:pid].rjust( @max[:pid] ) + (" %.2f MB " % x[:rss]).rjust( @max[:rss]+3 ) + x[:command]
       end
       puts "Total Memory Usage: %.2f MB" % @total
    end
@@ -53,7 +53,7 @@ class Memory
    end
 end
 
-#Run example onyl if called directly
+#Run example only if called directly
 #ie not if included/required for class 
 if $0 == __FILE__
    a = Memory.new
